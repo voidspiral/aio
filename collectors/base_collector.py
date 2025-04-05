@@ -46,6 +46,7 @@ class BaseCollector(ABC):
         os.environ["ROMIO_HINT_PATH"] = self.config.get('tuning_path', 'hint')
 
         if self.fs_type == "Lustre":
+            # TODO lustre test dir
             return self.config.get('lustre_path', 'lustre')
         elif self.fs_type == "GekkoFS":
             self._config_gekkofs_env()
