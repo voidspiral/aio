@@ -47,6 +47,7 @@ git clone -b th-compile-passed https://github.com/sktzwhj/gekkofs-v0.9.2.git
 
 # Data Collection
 
+salloc 分配最大运行节点
 运行IOR基准测试
 ./collector.py -t Lustre -w "node[1-4]" -o ./dataset_lustre -b ior
 

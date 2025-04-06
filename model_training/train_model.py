@@ -1,3 +1,4 @@
+import os
 
 import pandas as pd
 import numpy as np
@@ -49,14 +50,16 @@ def model_train(fs_type, X_train, X_test, y_train, y_test):
     y_pred_test = regressor.predict(X_test)
     error = np.median(10 ** (np.abs(y_test - y_pred_test))-1)
     print(error)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
     if fs_type == "GekkoFS":
-        joblib.dump(regressor, './models/sgModel.pkl')
+        joblib.dump(regressor, f'{script_dir}/models/sgModel.pkl')
     elif fs_type == "Lustre":
-        joblib.dump(regressor, './models/slModel.pkl')
+        joblib.dump(regressor, f'{script_dir}/models/slModel.pkl')
 
 
 def main():
-    datafile = "data.csv"
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    datafile = os.path.join(script_dir, "data.csv")
     filesystem = ["Lustre", "GekkoFS"]
     for fs_type in filesystem:
         X_train, X_test, y_train, y_test = load_datasets(fs_type, datafile)
