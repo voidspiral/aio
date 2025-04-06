@@ -1,3 +1,13 @@
 /gkfs_hosts.txt
 /errorcommand.txt
 *.csv
+./collectors/logs/*
+*.so
+*.o
+/tuning/romio/mpiio.o
+*.txt
+darshan_log
+darshan_parse_log
+/logs/
+/model_training/models/slModel.pkl
+/model_training/models/sgModel.pkl

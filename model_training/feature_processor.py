@@ -12,6 +12,8 @@ import shutil
 from model_training.feature import *
 from typing import List, Dict, Any, Optional, Tuple
 
+from tuning.utils.get57features import extracting_darshan57
+
 # 配置日志
 logging.basicConfig(
     level=logging.INFO,
@@ -100,7 +102,7 @@ class FeatureProcessor:
                     continue
 
             # 提取特征并保存到CSV
-            df = FeatureProcessor.extract_features(os.path.join(temp_dir, "*.txt"))
+            df = extracting_darshan57(os.path.join(temp_dir, "*.txt"))
             features_file = os.path.join(output_path, "data.csv")
             df.to_csv(features_file, index=False)
             logging.info(f"Features extracted and saved to {features_file}")
@@ -780,23 +782,20 @@ class FeatureProcessor:
 
 
 def main():
-    try:
-        # 加载配置
-        config = FeatureProcessor._load_config(None)
-        FeatureProcessor._setup_environment(config)
 
-        # 解析所有日志文件
-        input_path = "/thfs3/home/wuhuijun/lmj/fix/AIO_OPRAEL-20250219/dataset_gekkofs"
-        output_path = "./model_training/"
-        FeatureProcessor.parse_darshan_logs(input_path, output_path)
+    # 加载配置
+    config = FeatureProcessor._load_config(None)
+    FeatureProcessor._setup_environment(config)
 
-        input_path = "/thfs3/home/wuhuijun/lmj/fix/AIO_OPRAEL-20250219/dataset_lustre"
-        output_path = "./model_training/"
-        FeatureProcessor.parse_darshan_logs(input_path, output_path)
+    # 解析所有日志文件
+    input_path = "/thfs3/home/wuhuijun/lmj/fix/AIO_OPRAEL-20250219/dataset_gekkofs"
+    output_path = "./model_training/"
+    FeatureProcessor.parse_darshan_logs(input_path, output_path)
 
-    except Exception as e:
-        logging.error(f"Error processing Darshan logs: {e}")
-        sys.exit(1)
+    input_path = "/thfs3/home/wuhuijun/lmj/fix/AIO_OPRAEL-20250219/dataset_lustre"
+    output_path = "./model_training/"
+    FeatureProcessor.parse_darshan_logs(input_path, output_path)
+
 
 
 if __name__ == "__main__":
