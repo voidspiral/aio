@@ -199,7 +199,6 @@ class Ensemble(BOBase):
         config = advisor.get_suggestion()
 
         darshan_parse_log = os.path.join(os.getcwd(),"darshan_parse_log")
-        # print("!!!", os.path.join(darshan_parse_log, self.log_file_2))
         if self.fs_type == 'Lustre':
             dfconfig = pd.DataFrame([config], columns=romio_features + lustre_feature)
             for c in dfconfig:

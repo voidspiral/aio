@@ -39,11 +39,13 @@ git clone -b th-compile-passed https://github.com/sktzwhj/gekkofs-v0.9.2.git
 ## 目录结构
 
 # tuning/mpiio.c
-修改romio参数，注意将参数路径
-先编译
-```shell
 
+```shell 
+module load mpich4
+cd tuning/romio
+make
 ```
+
 
 # Data Collection
 
@@ -51,23 +53,15 @@ salloc 分配最大运行节点
 运行IOR基准测试
 ./collector.py -t Lustre -w "node[1-4]" -o ./dataset_lustre -b ior
 
-./collector.py -t Lustre  -o ./dataset_lustre -b ior -w  `srun hostname | nodeset -f`
+./collector.py -t Lustre  -o ./collectors/logs/lustre -b ior -w  `srun hostname | nodeset -f`
 
-./collector.py -t GekkoFS  -o ./dataset_lustre -b ior -w  `srun hostname | nodeset -f`
-
-
-# Model For File System Selection
-
-python model_trainning/train_mode.py
+./collector.py -t GekkoFS  -o ./collectors/logs/gekkofs -b ior -w  `srun hostname | nodeset -f`
 
 
 
 # Models For Autotuning File Systems
 
-python AIO_searcher-model.py ./dataset_lustre Lustre 1.csv
-
-python AIO_searcher-model.py ./dataset_gekkfs GekkoFS 1.csv
-
+python model_training/train_model.py
 
 
 # Running

@@ -20,6 +20,7 @@ def get_host_list():
 
 if __name__ == "__main__":
     cmd = get_cmd(sys.argv)
+
     hosts = get_host_list()
     print("hosts:", hosts)
     aio = AIO(cmd, hosts)

@@ -12,14 +12,9 @@ class IORCollector(BaseCollector):
         self.initial_environ = copy.deepcopy(os.environ)
 
         super().__init__(fs_type, nodelist, output)
-        # nodes  4, 8. 16 32
-        # -ppn 8
-        # -b 64m 128m 256m `
-        # -t 4    16    64
-        # offset 不要了
-        # TODO timeout
+
         self.test_params = {
-            'nodes': [4, 8, 16, 32],
+            'nodes': [4],
             'proc_per_node': [8],
             'blocksize': ["64m", "128m", "512m"],
             'xfersize': ["4m"],
@@ -109,6 +104,7 @@ class IORCollector(BaseCollector):
 
         #TODO fix lustre_str 不可能和gkfs_str 同时存在
         log_filename = f"N-{N}_n-{ppn}_m_wr_t-{xfersize}_b-{blocksize}_{romio_str}_{lustre_str}_{gkfs_str}.darshan"
+        print("IOR LOGFILE",  os.path.join(os.environ["DARSHAN_LOGPATH"], log_filename))
         os.environ["DARSHAN_LOGFILE"] = os.path.join(os.environ["DARSHAN_LOGPATH"], log_filename)
 
         # 设置参数并运行测试
